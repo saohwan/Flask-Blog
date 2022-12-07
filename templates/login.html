@@ -1,4 +1,4 @@
-{% extends 'bootstrap/base.html' %}
+`{% extends 'bootstrap/base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
@@ -27,7 +27,7 @@
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="해당 이메일은 이미 등록된 이메일입니다. 해당 이메일로 로그인해주세요!" role="alert">
+                            <div class="alert alert-warning alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
                                 {{ message }}
@@ -42,4 +42,4 @@
 
 
     {% include "footer.html" %}
-{% endblock %}
+{% endblock %}`

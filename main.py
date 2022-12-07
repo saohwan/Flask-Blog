@@ -68,7 +68,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if User.query.filter_by(email=form.email.data).first():
-            flash("You've already signed up with that email, log in instead!")
+            flash("해당 이메일은 이미 등록된 이메일입니다. 해당 이메일로 로그인해주세요!")
             return redirect(url_for('login'))
 
         hash_and_salted_password = generate_password_hash(
@@ -93,19 +93,24 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+
         email = form.email.data
         password = form.password.data
 
         user = User.query.filter_by(email=email).first()
-        print("What is your user?", user)
-
+        if not user:
+            flash("등록되지 않은 이메일입니다. 다시 시도해주세요.")
+            return redirect(url_for('login'))
+        # password incorrect
         # user 그리고 check_password_hash 값이 true 이면
         # user.password 의 값과 password 드 값이 같으면 true
-        if user and check_password_hash(user.password, password):
+        elif not check_password_hash(user.password, password):
+            flash("패스워드 오류. 다시 시도해주세요.")
+            return redirect(url_for('login'))
+        else:
             # login successful = return true
             login_user(user)
-            # get_all_posts 화면으로 이동
-            return redirect(url_for("get_all_posts"))
+            return redirect(url_for('get_all_posts'))
 
     return render_template("login.html", form=form)
 

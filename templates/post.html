@@ -25,10 +25,12 @@
         <div class="col-lg-8 col-md-10 mx-auto">
             {{ post.body|safe }}
           <hr>
-
+            <!-- user.id 가 1 인 유저만 edit 버튼 보기-->
+            {% if current_user.id == 1 %}
             <div class="clearfix">
             <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
             </div>
+            {% endif %}
 
 
 

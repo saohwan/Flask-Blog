@@ -6,6 +6,7 @@ from flask import abort
 from flask import request
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
+from flask_gravatar import Gravatar
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
@@ -27,9 +28,12 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# Gravatar
+
+gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False, base_url=None)
+
 
 # Create admin-only decorator
-
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
